@@ -29,16 +29,17 @@ export default {
     return {
       form : {
         username: ''
-      },
-      isLoggedIn: false
+      }
     }
   },
-  beforeMount: function() {
-    const apiKey = this.$cookies.get('api-key');
-    if(apiKey) {
-      this.isLoggedIn = true;
+  computed: {
+    isLoggedIn: function() {
+      const apiKey = this.$cookies.get('api-key');
+      if(apiKey) {
+        return true;
+      }
+      return false;
     }
-    console.log(this.isLoggedIn)
   },
   methods: {
     onSubmit: async function(evt) {
