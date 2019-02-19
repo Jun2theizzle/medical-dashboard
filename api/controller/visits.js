@@ -9,8 +9,9 @@ router.get('/', (req, res) => {
             "medicalVisit": {
                 "reason": "back pain",
                 "description": "something happend to my back",
-                "visitDate": moment().toLocaleString(),
-                "cost": 100
+                "visitDate": moment().format('YYYY-MM-DD'),
+                "cost": 100,
+                "paid": true
             }
         },
         {
@@ -19,8 +20,9 @@ router.get('/', (req, res) => {
             "medicalVisit": {
                 "reason": "stomach pain",
                 "description": "something happend to my stomach",
-                "visitDate": moment().subtract(4, 'days').toLocaleString(),
-                "cost": 200
+                "visitDate": moment().subtract(4, 'days').format('YYYY-MM-DD'),
+                "cost": 200,
+                "paid": true
             }
         },
         {
@@ -29,8 +31,9 @@ router.get('/', (req, res) => {
             "medicalVisit": {
                 "reason": "wrist pain",
                 "description": "something happend to my wrist",
-                "visitDate": moment().subtract(4, 'months').toLocaleString(),
-                "cost": 1222
+                "visitDate": moment().subtract(4, 'months').format('YYYY-MM-DD'),
+                "cost": 122,
+                "paid": false
             }
         },
         {
@@ -39,14 +42,15 @@ router.get('/', (req, res) => {
             "medicalVisit": {
                 "reason": "back pain",
                 "description": "something happend to my back",
-                "visitDate": moment().subtract(4, 'week').toLocaleString(),
-                "cost": 222
+                "visitDate": moment().subtract(4, 'week').format('YYYY-MM-DD'),
+                "cost": 222,
+                "paid": false
             }
         }
     ];
 
     res.json({
-        vists: visits
+        visits: visits
     })
 });
 
