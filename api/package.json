@@ -4,13 +4,20 @@
   "private": true,
   "scripts": {
     "dev": "nodemon ./bin/www",
-    "start": "node ./bin/www"
+    "start": "node ./bin/www",
+    "test": "./node_modules/.bin/mocha tests/**/*.spec.js"
   },
   "dependencies": {
     "cors": "^2.8.5",
     "debug": "~2.6.9",
     "express": "~4.16.0",
     "http-errors": "~1.6.2",
+    "mocha": "^6.0.0",
     "moment": "^2.24.0"
+  },
+  "devDependencies": {
+    "chai": "^4.2.0",
+    "sinon": "^7.2.4",
+    "supertest": "^3.4.2"
   }
 }
