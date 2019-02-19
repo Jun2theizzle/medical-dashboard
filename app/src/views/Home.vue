@@ -1,23 +1,21 @@
 <template>
-  <div class="home">
-    <button @click="click('thing')">Button</button>
-  </div>
+  <b-jumbotron>
+    <template slot="header">Welcome to your Dashboard</template>
+    <b-button variant="primary" @click="click()">Login Here</b-button>
+  </b-jumbotron>
 </template>
 
 <script>
 // @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
 import axios from 'axios'
 
 export default {
   name: 'home',
   components: {
-    HelloWorld
   },
   methods: {
-    click: async function(message) {
-      const response = await axios.get('http://httpbin.org/get');
-      alert(JSON.stringify(response));
+    click: function() {
+      this.$router.push({ path: '/login' })
     }
   }
 }

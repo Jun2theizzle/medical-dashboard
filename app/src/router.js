@@ -1,8 +1,9 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import Home from './views/Home.vue'
-import Login from './views/Login.vue'
+import VueCookies from 'vue-cookies'
 
+Vue.use(VueCookies)
 Vue.use(Router)
 
 let router = new Router({
@@ -15,12 +16,12 @@ let router = new Router({
     {
       path: '/login',
       name: 'login',
-      component: Login
+      component: () => import('./views/Login.vue'),
     },
     {
-      path: '/about',
-      name: 'about',
-      component: () => import('./views/About.vue'),
+      path: '/visits',
+      name: 'visits',
+      component: () => import('./views/Visits.vue'),
       meta: {
         auth: true
       }
@@ -30,7 +31,7 @@ let router = new Router({
 
 router.beforeEach((to, from, next) => {
     if (to.matched.some(record => record.meta.auth)) {
-      if (localStorage.getItem('api-key') == null) {
+      if (window.$cookies.get('api-key') == null) {
         router.push({
           name: 'login',
           params: {
