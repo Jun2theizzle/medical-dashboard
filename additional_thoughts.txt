@@ -1,0 +1,42 @@
+Also think through:
+1) Test framework and coverage
+    - used a combination for mocha/sinon/chai
+    - code coverage has not been THE most important factor for me. During the code review the developers
+    should also be code reviewing the test to make sure they are sufficient. 
+        - with that said, there should be an agreed open code coverage threshold (this number depending on the team), and at the very least any 
+        additional changes should NOT drop code coverage
+
+2) High availability/fail over/ performance SLAs
+    - Deploying this application would involved multiple steps
+    - Would need to deploy the application to multiple regions on AWS and use the Route 53 traffic
+    flow policy to route traffic accordingly.
+    - we can route traffic based on where the users are such to the nearest data center to reduce latency
+    - we can also configure the traffic policy to route to a different data center if one fails
+
+3) Deployment/rollback options on the services - CI/CD,Containers
+    - the pipeline I envision will look like something as follows
+    - a gitops type approach where the repo should comprise of everything it needs to both create it's code pipeline and infrastructure
+    - repo structure
+        /src - source code
+        /infrastructure - terraform/cloudformation for the application infrastructure (AWS Fargate, Beanstalk, etc)
+        /cicd 
+            /infrastructure - terraform/cloudformation for the application code pipeline and codedeploy(with codedeploy targetting the infrastructure)
+            /specs - comprise of buildspec.yml for CodePipeline and appspec.yml for Codedeploy
+    - steps
+        - on git push, the CI tool (Jenkins, Octopus Deploy, Travis, etc) - will create the CodePipeline if it doesn't already exists
+        - the CI tool will start the CodePipeline
+        - the Codepipeline will invoke the buildspec.yml (building docker images for example)
+        - if those pass it will create the infrastructure 
+        - then it will deploy the code by invoking CodeDeploy
+
+4) Documentation for FE engineers, e.g. Swagger, RAML or use GraphQL.
+Have at least 1 example.
+    - Ima fan of swagger, but my experience have been more so making POSTMAN or PAW projects and sharing those with other teams
+
+5) Design patterns & code review process for other people working on the
+code and extending it
+    - Everyone should be making branches of the main 'master' branches
+    - Create pull requests to master 
+        - this should trigger the CI tool to build and run unit tests
+    - Have 1 or more developers on the team code review 
+    - Only when problems are addressed and everyone approves, should it be merged 
