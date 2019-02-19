@@ -25,6 +25,14 @@ let router = new Router({
       meta: {
         auth: true
       }
+    },
+    {
+      path: '/messages',
+      name: 'messages',
+      component: () => import('./views/Messages.vue'),
+      meta: {
+        auth: true
+      }
     }
   ]
 });

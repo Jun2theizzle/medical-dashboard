@@ -1,5 +1,9 @@
 <template>
   <b-jumbotron id="login">
+    <div v-if="isLoggedIn">
+        <b-button variant="danger" @click="logOut">Log Out</b-button>
+    </div>
+    <div v-else>
       <template slot="lead">Please Login</template>
       <b-form id="login-form" @submit="onSubmit">
         <b-form-group id="login-name" label="Your Name:" label-for="name-input">
@@ -12,6 +16,7 @@
         </b-form-group>
         <b-button type="submit" variant="primary">Login</b-button>
       </b-form>
+    </div>
   </b-jumbotron>
 </template>
 
@@ -24,8 +29,16 @@ export default {
     return {
       form : {
         username: ''
-      }
+      },
+      isLoggedIn: false
     }
+  },
+  beforeMount: function() {
+    const apiKey = this.$cookies.get('api-key');
+    if(apiKey) {
+      this.isLoggedIn = true;
+    }
+    console.log(this.isLoggedIn)
   },
   methods: {
     onSubmit: async function(evt) {
@@ -45,7 +58,10 @@ export default {
       catch(err) {
         alert('Unable to login: ' + err.message)
       }
-
+    },
+    logOut: function() {
+        this.$cookies.remove('api-key');
+        this.$router.push({ path: '/'});
     }
   }
 }
