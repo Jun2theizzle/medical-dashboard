@@ -46,9 +46,21 @@ export default {
     }
   },
   beforeCreate: async function() {
-    const visitsResponse = await axios.get('http://localhost:3000/api/visits');
-    console.log(visitsResponse.data);
-    this.visits = visitsResponse.data.visits;
+    const options = {
+      method: 'GET',
+      url: 'http://localhost:3000/api/visits',
+      headers: {
+        'api-key': this.$cookies.get('api-key')
+      }
+    }
+    try {
+      const visitsResponse = await axios(options);
+      
+      this.visits = visitsResponse.data.visits;
+    }
+    catch(err) {
+      this.$router.push({ path: '/error'})
+    }
   },
   methods: {
     pillColor: function(paid) {

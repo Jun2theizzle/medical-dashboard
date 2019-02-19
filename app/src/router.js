@@ -14,6 +14,11 @@ let router = new Router({
       component: Home
     },
     {
+      path: '/error',
+      name: 'error',
+      component: () => import('./views/Error.vue'),
+    },
+    {
       path: '/login',
       name: 'login',
       component: () => import('./views/Login.vue'),

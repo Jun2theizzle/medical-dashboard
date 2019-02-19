@@ -45,8 +45,16 @@ export default {
     onSubmit: async function(evt) {
       evt.preventDefault();
       try {
-        const loginResponse = await axios.post('http://localhost:3000/api/login');
+        const options = {
+          method: 'POST',
+          url: 'http://localhost:3000/api/login',
+          headers: {
+            accept: 'application/json'
+          }
+        }
+        const loginResponse = await axios(options);
         const data = loginResponse.data;
+        console.log(data);
         this.$cookies.set('api-key', data['api-key']);
 
         if(this.$route.params.nextUrl) {
