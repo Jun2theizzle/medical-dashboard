@@ -1,10 +1,10 @@
-var createError  = require('http-errors');
-var express      = require('express');
-var path         = require('path');
+const createError      = require('http-errors');
+const express          = require('express');
+const path             = require('path');
+const app              = express();
 
-var app = express();
-
-// view engine setup
+const visitsController = require('./controller/visits');
+const loginController = require('./controller/login');
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -12,6 +12,9 @@ app.use(express.urlencoded({ extended: false }));
 app.get('/', (req, res) => {
   res.json({ 'hello' : 'world' });
 });
+
+app.use('/api/login', loginController);
+app.use('/api/visits', visitsController);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {
@@ -26,7 +29,9 @@ app.use(function(err, req, res, next) {
 
   // render the error page
   res.status(err.status || 500);
-  res.render('error');
+  res.json({
+    error: err.message
+  })
 });
 
 module.exports = app;
